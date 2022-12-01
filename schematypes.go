@@ -115,8 +115,9 @@ func (r *ErrorResponse) GetResponse() *Response { return &r.Response }
 // The request that got canceled still needs to send a response back. This can either be a normal result ('success' attribute true)
 // or an error response ('success' attribute false and the 'message' set to 'cancelled').
 // Returning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.
-//  The progress that got cancelled still needs to send a 'progressEnd' event back.
-//  A client should not assume that progress just got cancelled after sending the 'cancel' request.
+//
+//	The progress that got cancelled still needs to send a 'progressEnd' event back.
+//	A client should not assume that progress just got cancelled after sending the 'cancel' request.
 type CancelRequest struct {
 	Request
 
@@ -1774,16 +1775,16 @@ type InstructionBreakpoint struct {
 
 // Breakpoint: Information about a Breakpoint created in setBreakpoints, setFunctionBreakpoints, setInstructionBreakpoints, or setDataBreakpoints.
 type Breakpoint struct {
-	Id                   int    `json:"id,omitempty"`
-	Verified             bool   `json:"verified"`
-	Message              string `json:"message,omitempty"`
-	Source               Source `json:"source,omitempty"`
-	Line                 int    `json:"line,omitempty"`
-	Column               int    `json:"column,omitempty"`
-	EndLine              int    `json:"endLine,omitempty"`
-	EndColumn            int    `json:"endColumn,omitempty"`
-	InstructionReference string `json:"instructionReference,omitempty"`
-	Offset               int    `json:"offset,omitempty"`
+	Id                   int     `json:"id,omitempty"`
+	Verified             bool    `json:"verified"`
+	Message              string  `json:"message,omitempty"`
+	Source               *Source `json:"source,omitempty"`
+	Line                 int     `json:"line,omitempty"`
+	Column               int     `json:"column,omitempty"`
+	EndLine              int     `json:"endLine,omitempty"`
+	EndColumn            int     `json:"endColumn,omitempty"`
+	InstructionReference string  `json:"instructionReference,omitempty"`
+	Offset               int     `json:"offset,omitempty"`
 }
 
 // SteppingGranularity: The granularity of one 'step' in the stepping requests 'next', 'stepIn', 'stepOut', and 'stepBack'.

@@ -61,10 +61,10 @@ func goFieldName(jsonPropName string) string {
 // parsePropertyType takes the JSON value of a property field and extracts
 // the Go type of the property. For example, given this map:
 //
-//  {
-//    "type": "string",
-//    "description": "The command to execute."
-//  },
+//	{
+//	  "type": "string",
+//	  "description": "The command to execute."
+//	},
 //
 // It will emit "string".
 func parsePropertyType(propValue map[string]interface{}) string {
@@ -131,8 +131,8 @@ func parsePropertyType(propValue map[string]interface{}) string {
 //
 // Example:
 //
-//    "allOf": [ { "$ref": "#/definitions/ProtocolMessage" },
-//               {... type description ...} ]
+//	"allOf": [ { "$ref": "#/definitions/ProtocolMessage" },
+//	           {... type description ...} ]
 //
 // Returns base type ProtocolMessage and a map representing type description.
 // If there is no "allOf", returns an empty baseTypeName and descMap itself.
@@ -317,8 +317,12 @@ func emitToplevelType(typeName string, descJson json.RawMessage) string {
 			} else {
 				jsonTag += ",omitempty\"`"
 			}
+			if typeName == "Breakpoint" && goType == "Source" {
+				fmt.Fprintf(&b, "\t%s *%s %s\n", goFieldName(propName), goType, jsonTag)
+			} else {
+				fmt.Fprintf(&b, "\t%s %s %s\n", goFieldName(propName), goType, jsonTag)
+			}
 
-			fmt.Fprintf(&b, "\t%s %s %s\n", goFieldName(propName), goType, jsonTag)
 		}
 	}
 
